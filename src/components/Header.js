@@ -1,17 +1,14 @@
-function Header() {
+function Header({onCategoryChange}) {
     return (
         <div style={{display:"flex", justifyContent: "left", width: "80%"}}>
-            <div style={{margin:10}}>
-                <input></input>
+            <div style={{margin:10}} onClick={() => onCategoryChange({category: 'entertainment'})}>
+                <p>Entertainment</p>
             </div>
-            <div style={{margin:10}}>
-                <a>Entertainment</a>
+            <div style={{margin:10}} onClick={() => onCategoryChange({category: 'sports'})}>
+                <p>Sports</p>
             </div>
-            <div style={{margin:10}}>
-                <a>Sports</a>
-            </div>
-            <div style={{margin:10}}>
-                <a>Technology</a>
+            <div style={{margin:10}} onClick={() => onCategoryChange({category: 'technology'})}>
+                <p>Technology</p>
             </div>
         </div>
     )

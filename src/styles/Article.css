@@ -1,0 +1,45 @@
+p{
+    text-align: left;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.container{
+    width: 90%;
+    padding: 4%;
+    border: 2px solid #69B578;
+    margin-bottom: 12px;
+    display:flex;
+    flex-direction: row;
+}
+
+.text{
+    flex: 2;
+}
+
+.title{
+    color: #272589;
+    font-size: 16;
+}
+
+.author{
+    color: #959595;
+    font-size: 12;
+}
+
+.read-more {
+    text-align: left;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.cover-image-container{
+    flex:2
+}
+
+.cover-image{
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 20;
+    margin-right: 0;
+    height: 100%;
+    width: 100%;
+}

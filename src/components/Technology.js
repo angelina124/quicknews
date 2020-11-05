@@ -1,6 +1,22 @@
 import React from 'react';
 import Article from './Article'
 
+const dataToComponents = ({data}) => (
+    <ul style={{padding: 0, listStyleType: 'none'}}>
+        {data.map((article, i) => 
+            <li key={i}>
+                <Article
+                    title={article.title}
+                    author={article.author}
+                    description={article.description}
+                    url={article.description}
+                    imageSrc={article.urlToImage}
+                />
+            </li>
+        )}
+    </ul>
+)
+
 export default class Technology extends React.Component{
     constructor(props){
         super(props)
@@ -11,8 +27,8 @@ export default class Technology extends React.Component{
     }
 
     async fetchData(){
-        const { fetchTechNews } = this.props
-        const techNews = await fetchTechNews()
+        const { fetchNews, category } = this.props
+        const techNews = await fetchNews({category})
         this.setState({techNews, isFetching:false})
     }
 
@@ -21,37 +37,39 @@ export default class Technology extends React.Component{
         this.fetchData()
     }
 
+    componentDidUpdate(prevProps){
+        if(prevProps.keyword !== this.props.keyword || prevProps.category !== this.props.category){
+            this.setState({isFetching: true})
+            this.fetchData()
+        }
+    }
+
     render(){
-        const {isFetching, techNews} = this.state
-        console.log(techNews)
+        const { isFetching, techNews: {todayArticles = [], customizedArticles = []} = {} } = this.state
+        const { keyword} = this.props
+    
         return (
-        <div style={{"flex": 1, display:"flex", flexDirection:"row", justifyContent:"space-evenly"}}>
-          <div style={{width:'33%'}}>
-            <p>TODAY'S NEWS</p>
-            <div>
-                { isFetching || !techNews ? 
+        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly"}}>
+          <div style={{width:'40%', height: '100%'}}>
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+              <p>FILTERED NEWS</p>
+              {keyword.length === 0 ? <p>{keyword}</p> : <div/>}
+            </div>
+            <div style={{overflow: 'scroll', height: '80vh'}}>
+                { isFetching || !customizedArticles ? 
                     (<p>Fetching data...</p>) : 
-                    <ul style={{listStyleType: 'none'}}>
-                        {techNews.map((article) => 
-                            <li key={article.title}>
-                                <Article
-                                    title={article.title}
-                                    author={article.author}
-                                    description={article.description}
-                                    url={article.description}
-                                    imageSrc={article.urlToImage}
-                                />
-                            </li>
-                        )}
-                    </ul>
+                    dataToComponents({data:customizedArticles})
                 }
             </div>
           </div>
-          <div>
-            <p>YESTERDAY'S NEWS</p>
-          </div>
-          <div>
-            <p>THIS WEEK'S NEWS</p>
+          <div style={{width:'40%', height: '100%'}}>
+            <p>TODAY'S NEWS</p>
+            <div style={{overflow: 'scroll', height: '80vh'}}>
+                { isFetching || !todayArticles ? 
+                    (<p>Fetching data...</p>) : 
+                    dataToComponents({data:todayArticles})
+                }
+            </div>
           </div>
         </div>
         )
