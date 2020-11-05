@@ -8,17 +8,16 @@ p{
     padding: 4%;
     border: 2px solid #69B578;
     margin-bottom: 12px;
-    display:flex;
-    flex-direction: row;
-}
-
-.text{
-    flex: 2;
+    position: relative;
 }
 
 .title{
     color: #272589;
     font-size: 16;
+}
+
+.text{
+    
 }
 
 .author{
@@ -32,14 +31,13 @@ p{
 }
 
 .cover-image-container{
-    flex:2
+    width: 50%;
+    height: auto;
+    float: right;
+    margin: 48px 0px 12px 12px;
 }
 
 .cover-image{
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-left: 20;
-    margin-right: 0;
-    height: 100%;
+    height: auto;
     width: 100%;
 }

@@ -1,0 +1,22 @@
+.header{
+    display:flex;
+    justify-content: left;
+    width: 100%;
+    padding-left: 10%;
+    background-color: black;
+}
+
+.selected{
+    background-color:cyan;
+    color: black;
+    margin-right: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.unselected{
+    color:cyan;
+    margin-right: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+}

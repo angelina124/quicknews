@@ -34,7 +34,8 @@ class App extends Component{
     const techNews = await news.fetchNews({
       hasSources: typeof(categorySources) != 'undefined', 
       sources: categorySources, 
-      startDate, stopDate, 
+      startDate, 
+      stopDate, 
       keyword: queryWord
     })
     return techNews
@@ -50,18 +51,29 @@ class App extends Component{
 
   render = () =>
     {
-      const { category } = this.state
+      const { category, startDate, stopDate } = this.state
       return (
         <div className="App">
           <header className="App-header">
-            <Header onCategoryChange={this.onCategoryChange}/>
+            <Header onCategoryChange={this.onCategoryChange} category={category}/>
           </header>
           <body style = {{display: 'flex', flexDirection: 'row', width: '95%', justifyContent: 'center'}}>
-            <div style={{width: '20%', padding: 24}}>
-              <input type="text" onChange={(event) => { this.setState({keyword: event.target.value})}} placeholder="Enter keyword: "/>
+            <div style={{width: '10%', padding: 24}}>
+              <label for='keyword'>Enter keyword:</label>
+              <input id='kewyword' type="text" onChange={(event) => { this.setState({keyword: event.target.value})}} placeholder="Enter keyword: "/>
+              <label for='startDate'>Enter start date (yyyy-mm-dd):</label>
+              <input id='startDate' type="text" onChange={(event) => { this.setState({startDate: event.target.value})}} placeholder="Start date (yyyy-mm-dd): "/>
+              <label for='stopDate'>Enter end date (yyyy-mm-dd)</label>
+              <input id='stopDate' type="text" onChange={(event) => { this.setState({stopDate: event.target.value})}} placeholder="End date (yyyy-mm-dd): "/>
             </div>
-            <div style={{width:'80%'}}>
-              <Technology category={category} fetchNews={this.fetchNews} keyword={this.state.keyword}/>
+            <div style={{width:'90%'}}>
+              <Technology 
+                category={category} 
+                fetchNews={this.fetchNews} 
+                keyword={this.state.keyword} 
+                startDate={startDate} 
+                stopDate={stopDate}
+              />
             </div>
           </body>
         </div>

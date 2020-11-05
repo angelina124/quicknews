@@ -11,6 +11,7 @@ const dataToComponents = ({data}) => (
                     description={article.description}
                     url={article.description}
                     imageSrc={article.urlToImage}
+                    publishedAt={article.publishedAt}
                 />
             </li>
         )}
@@ -38,7 +39,9 @@ export default class Technology extends React.Component{
     }
 
     componentDidUpdate(prevProps){
-        if(prevProps.keyword !== this.props.keyword || prevProps.category !== this.props.category){
+        if(prevProps.keyword !== this.props.keyword 
+            || prevProps.category !== this.props.category 
+            || prevProps.startDate !== this.props.startDate){
             this.setState({isFetching: true})
             this.fetchData()
         }
