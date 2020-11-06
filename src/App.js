@@ -58,13 +58,19 @@ class App extends Component{
             <Header onCategoryChange={this.onCategoryChange} category={category}/>
           </header>
           <div style = {{display: 'flex', flexDirection: 'row', width: '95%', justifyContent: 'center'}}>
-            <div style={{width: '10%', padding: 24}}>
-              <label htmlFor='keyword'>Enter keyword:</label>
-              <input id='kewyword' type="text" onChange={(event) => { this.setState({keyword: event.target.value})}} placeholder="Enter keyword: "/>
-              <label htmlFor='startDate'>Enter start date (yyyy-mm-dd):</label>
-              <input id='startDate' type="text" onChange={(event) => { this.setState({startDate: event.target.value})}} placeholder="Start date (yyyy-mm-dd): "/>
-              <label htmlFor='stopDate'>Enter end date (yyyy-mm-dd)</label>
-              <input id='stopDate' type="text" onChange={(event) => { this.setState({stopDate: event.target.value})}} placeholder="End date (yyyy-mm-dd): "/>
+            <div className='options'>
+              <div className='option'>
+                <label className='option-label' htmlFor='keyword'>Enter keyword:</label>
+                <input id='keyword' type="text" onChange={(event) => { this.setState({keyword: event.target.value})}} placeholder="Enter keyword: "/>
+              </div>
+              <div className='option'>
+                <label className='option-label' htmlFor='startDate'>Enter start date (yyyy-mm-dd):</label>
+                <input id='startDate' type="text" onChange={(event) => { this.setState({startDate: event.target.value})}} placeholder="Start date (yyyy-mm-dd): "/>
+              </div>
+              <div className='option'>
+                  <label className='option-label' htmlFor='stopDate'>Enter end date (yyyy-mm-dd)</label>
+                  <input id='stopDate' type="text" onChange={(event) => { this.setState({stopDate: event.target.value})}} placeholder="End date (yyyy-mm-dd): "/>
+              </div>
             </div>
             <div style={{width:'90%'}}>
               <Technology 

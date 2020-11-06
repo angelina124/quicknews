@@ -1,7 +1,7 @@
 import '../styles/Article.css';
 
 const Article = ({title, author, description, url, imageSrc, publishedAt}) => (
-    <div onClick={() => window.location.href = url} className='container'>
+    <div onClick={() => window.location.href = `${url}`} className='container'>
         <div className='text'>
             <p className='title'>{title}</p>
             <p className='author'>{author}</p>

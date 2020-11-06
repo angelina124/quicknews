@@ -9,7 +9,7 @@ const dataToComponents = ({data}) => (
                     title={article.title}
                     author={article.author}
                     description={article.description}
-                    url={article.description}
+                    url={article.url}
                     imageSrc={article.urlToImage}
                     publishedAt={article.publishedAt}
                 />

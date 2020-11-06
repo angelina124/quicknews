@@ -24,6 +24,29 @@
   color: white;
 }
 
+.options{
+  width: 20%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: left;
+}
+
+.option{
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: left;
+}
+
+.option-label{
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bold;
+  text-align: left;
+  left: 0;
+  margin-bottom: 10px
+}
+
 .App-link {
   color: #61dafb;
 }
