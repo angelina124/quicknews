@@ -12,6 +12,7 @@ const Article = ({type, title, author, description, url, imageSrc, publishedAt})
         <p className='author'>{author}</p>
         <p className='author'>{publishedAt}</p>
         <p>{description}</p>
+        <p><a href={url}>Read more...</a></p>
     </div>
 )
 

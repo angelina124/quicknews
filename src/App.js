@@ -37,32 +37,32 @@ class App extends Component{
 
   render = () =>
     {
-      const { sources, category, startDate, stopDate } = this.state
+      const { sources, category, startDate, stopDate, keyword } = this.state
       return (
         <div className="App">
-          <header className="App-header">
+          <div>
             <Header onCategoryChange={this.onCategoryChange} category={category}/>
-          </header>
-          <div style = {{display: 'flex', flexDirection: 'row', width: '95%', justifyContent: 'center', marginTop: 16}}>
+          </div>
+          <div className='content'>
             <div className='options'>
               <div className='option'>
                 <label className='option-label' htmlFor='keyword'>Enter keyword:</label>
-                <input id='keyword' type="text" onChange={(event) => { this.setState({keyword: event.target.value})}} placeholder="Enter keyword: "/>
+                <input id='keyword' type="text" onChange={(event) => { this.setState({keyword: event.target.value})}} placeholder="e.g. google"/>
               </div>
               <div className='option'>
-                <label className='option-label' htmlFor='startDate'>Enter start date (yyyy-mm-dd):</label>
-                <input id='startDate' type="text" onChange={(event) => { this.setState({startDate: event.target.value})}} placeholder="Start date (yyyy-mm-dd): "/>
+                <label className='option-label' htmlFor='startDate'>Enter start date <br/>(yyyy-mm-dd):</label>
+                <input id='startDate' type="text" onChange={(event) => { this.setState({startDate: event.target.value})}} placeholder="e.g. 2020-09-01"/>
               </div>
               <div className='option'>
-                  <label className='option-label' htmlFor='stopDate'>Enter end date (yyyy-mm-dd)</label>
-                  <input id='stopDate' type="text" onChange={(event) => { this.setState({stopDate: event.target.value})}} placeholder="End date (yyyy-mm-dd): "/>
+                  <label className='option-label' htmlFor='stopDate'>Enter end date <br/>(yyyy-mm-dd)</label>
+                  <input id='stopDate' type="text" onChange={(event) => { this.setState({stopDate: event.target.value})}} placeholder="e.g. 2020-11-06"/>
               </div>
             </div>
-            <div style={{width:'90%'}}>
+            <div className='news'>
               <Technology 
                 category={category} 
                 sources={sources}
-                keyword={this.state.keyword} 
+                keyword={keyword} 
                 startDate={startDate} 
                 stopDate={stopDate}
               />

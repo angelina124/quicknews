@@ -1,4 +1,5 @@
 .App {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   text-align: center;
 }
 
@@ -13,20 +14,13 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  display: flex;
-  height: 100;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+input{
+  padding: 6px
 }
 
 .options{
   width: 20%;
-  padding: 20px;
+  padding: 0px 20px 0px 20px;
   display: flex;
   flex-direction: column;
   justify-content: left;
@@ -36,15 +30,27 @@
 .option{
   margin-bottom: 10px;
   display: flex;
+  flex-direction: column;
   justify-content: left;
 }
 
 .option-label{
-  font-family: 'Times New Roman', Times, serif;
-  font-weight: bold;
   text-align: left;
   left: 0;
   margin-bottom: 10px
+}
+
+.content{
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  justify-content: center;
+  margin-top: 16px
+}
+
+.news{
+  width: 80%;
+  justify-content: center;
 }
 
 .App-link {

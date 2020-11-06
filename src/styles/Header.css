@@ -1,7 +1,3 @@
-p {
-    font-size: 24px;
-}
-
 .header{
     display:flex;
     justify-content: left;
@@ -10,8 +6,14 @@ p {
     background-color: #1c1c1c;
 }
 
+.tab-title{
+    font-size: 12;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
 .selected{
-    background-color: lightskyblue;
+    background-color: #87cefa;
     color: black;
     margin-right: 20px;
     padding-left: 10px;
@@ -19,7 +21,7 @@ p {
 }
 
 .unselected{
-    color: lightskyblue;
+    color: #87cefa;
     margin-right: 20px;
     padding-left: 10px;
     padding-right: 10px;
