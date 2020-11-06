@@ -7,38 +7,50 @@ import news from './utilities/news'
 class App extends Component{
   constructor(props){
     super(props)
-    let today = new Date().toISOString().slice(0, 10)
+    let today = new Date()
+    let lastWeek = new Date(today.getTime() - (60*60*24*7*1000));
+    
     this.state = {
-      isFetchingSources: false, 
-      startDate: today,
-      stopDate: today,
+      isFetchingsources: false, 
+      startDate: lastWeek.toISOString().slice(0, 10),
+      stopDate: today.toISOString().slice(0, 10),
       category: 'entertainment',
       keyword: '',
       sources: {}
     }
-    this.fetchNewsSources = this.fetchNewsSources.bind(this)
+    this.fetchNewssources = this.fetchNewssources.bind(this)
     this.fetchNews = this.fetchNews.bind(this)
     this.onCategoryChange = this.onCategoryChange.bind(this)
   }
 
-  fetchNewsSources = async () => {
-    const sources = await news.fetchSources()
+  fetchNewssources = async () => {
+    const sources = await news.fetchsources()
     this.setState({sources})
   }
 
   async fetchNews({category}){
     const {sources, startDate, stopDate, keyword} = this.state
-    const categorySources = sources?.[category] || ''
+    const categorysources = sources?.[category] || ''
+    console.log(startDate)
+    console.log(category)
+    console.log(categorysources)
 
-    let queryWord = keyword.length === 0 ? category : keyword
-    const techNews = await news.fetchNews({
-      hasSources: typeof(categorySources) != 'undefined', 
-      sources: categorySources, 
+    let queryword = keyword.length === 0 ? category : keyword
+    console.log(queryword)
+    const popularNews = await news.fetchpopularNews({
+      category,
+      sources: categorysources, 
       startDate, 
-      stopDate, 
-      keyword: queryWord
+      stopDate
     })
-    return techNews
+
+    const filteredNews = await news.fetchFilteredNews({
+      sources: categorysources, 
+      startDate, 
+      stopDate,
+      keyword: queryword
+    })
+    return {popularNews, filteredNews}
   }
 
   onCategoryChange = ({category}) => {
@@ -46,7 +58,7 @@ class App extends Component{
   }
 
   componentDidMount(){
-    this.fetchNewsSources()
+    this.fetchNewssources()
   }
 
   render = () =>

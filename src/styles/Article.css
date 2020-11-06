@@ -1,6 +1,7 @@
 p{
     text-align: left;
     font-family: 'Times New Roman', Times, serif;
+    margin: 6px
 }
 
 .container{
@@ -31,13 +32,16 @@ p{
 }
 
 .cover-image-container{
-    width: 50%;
+    width: 60%;
+    max-width: 200px;
     height: auto;
+    float: top;
     float: right;
-    margin: 48px 0px 12px 12px;
+    margin:10px;
 }
 
 .cover-image{
     height: auto;
     width: 100%;
+    top: 0;
 }

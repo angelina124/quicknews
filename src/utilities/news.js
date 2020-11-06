@@ -4,16 +4,16 @@ require('dotenv').config()
 const apiKey = process.env.REACT_APP_SECRET_KEY
 const categories = ['technology', 'sports', 'entertainment']
 
-const fetchSources = async() => {
+const fetchsources = async() => {
     let sources = {}
     for (var category of categories){
-        const categorySources = await fetchCategorySources({category})
-        if(typeof(categorySources) != 'undefined') sources[category] = categorySources
+        const categorysources = await fetchCategorysources({category})
+        if(typeof(categorysources) != 'undefined') sources[category] = categorysources
     }
     return sources
 }
 
-const fetchCategorySources = async({category}) => {
+const fetchCategorysources = async({category}) => {
    // To query sources
    return axios.get(`https://newsapi.org/v2/sources?language=en&category=${category}&apiKey=${apiKey}`)
     .then(response => {
@@ -24,21 +24,26 @@ const fetchCategorySources = async({category}) => {
     .catch((error) => [])
 }
 
-const fetchNews = ({hasSources, sources, startDate, stopDate, keyword}) => {
-    let todayArticles = []
-    let customizedArticles = []
-    let today = new Date().toISOString().slice(0, 10)
-    let sourceString = sources?.length > 0 ? `&sources=${sources}` : ''
-    return axios.get(`https://newsapi.org/v2/everything?q=technology&language=en&from=${today}&to=${today}&sortBy=popularity${sourceString}&apiKey=${apiKey}`)
+const fetchpopularNews = ({category, sources, startDate, stopDate, keyword}) => {
+    let popularNews = []
+    let sourcestring = sources?.length > 0 ? `&sources=${sources}` : ''
+    return axios.get(`https://newsapi.org/v2/everything?language=en&q=${category}&sortBy=popularity${sourcestring}&apiKey=${apiKey}`)
             .then(response => {
-                todayArticles = response.data.articles
-                    return axios.get(`https://newsapi.org/v2/everything?q=${keyword}&language=en&from=${startDate}&to=${stopDate}&sortBy=popularity${sourceString}&apiKey=${apiKey}`)
-                    .then(res => {
-                        customizedArticles = res.data.articles
-                        return {todayArticles, customizedArticles}
-                    });
+                popularNews = response?.data?.articles
+                return typeof(popularNews) !== 'undefined' ? popularNews : []
             });
+
+    
 }
 
-const news = { fetchNews, fetchSources }
+const fetchFilteredNews = ({sources, startDate, stopDate, keyword}) => {
+    let sourcestring = sources?.length > 0 ? `&sources=${sources}` : ''
+    return axios.get(`https://newsapi.org/v2/everything?q=${keyword}&language=en&from=${startDate}&to=${stopDate}&sortBy=relevancy${sourcestring}&apiKey=${apiKey}`)
+        .then(response => {
+            let filteredArticles = response?.data?.articles
+            return typeof(filteredArticles) !== 'undefined' ? filteredArticles : []
+        });
+}
+
+const news = { fetchpopularNews, fetchFilteredNews, fetchsources }
 export default news

@@ -29,7 +29,9 @@ export default class Technology extends React.Component{
 
     async fetchData(){
         const { fetchNews, category } = this.props
+        console.log(category)
         const techNews = await fetchNews({category})
+        console.log(techNews)
         this.setState({techNews, isFetching:false})
     }
 
@@ -39,7 +41,7 @@ export default class Technology extends React.Component{
     }
 
     componentDidUpdate(prevProps){
-        if(prevProps.keyword !== this.props.keyword 
+       if(prevProps.keyword !== this.props.keyword 
             || prevProps.category !== this.props.category 
             || prevProps.startDate !== this.props.startDate){
             this.setState({isFetching: true})
@@ -48,8 +50,9 @@ export default class Technology extends React.Component{
     }
 
     render(){
-        const { isFetching, techNews: {todayArticles = [], customizedArticles = []} = {} } = this.state
+        const { isFetching, techNews: {popularNews = [], filteredNews = []} = {} } = this.state
         const { keyword} = this.props
+        console.log(popularNews)
     
         return (
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly"}}>
@@ -59,18 +62,18 @@ export default class Technology extends React.Component{
               {keyword.length === 0 ? <p>{keyword}</p> : <div/>}
             </div>
             <div style={{overflow: 'scroll', height: '80vh'}}>
-                { isFetching || !customizedArticles ? 
+                { isFetching || !filteredNews ? 
                     (<p>Fetching data...</p>) : 
-                    dataToComponents({data:customizedArticles})
+                    dataToComponents({data:filteredNews})
                 }
             </div>
           </div>
           <div style={{width:'40%', height: '100%'}}>
-            <p>TODAY'S NEWS</p>
+            <p>TRENDING NEWS</p>
             <div style={{overflow: 'scroll', height: '80vh'}}>
-                { isFetching || !todayArticles ? 
+                { isFetching || !popularNews ? 
                     (<p>Fetching data...</p>) : 
-                    dataToComponents({data:todayArticles})
+                    dataToComponents({data:popularNews})
                 }
             </div>
           </div>
