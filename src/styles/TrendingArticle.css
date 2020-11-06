@@ -12,13 +12,13 @@ p, a{
     position: relative;
 }
 
-#filtered{
-    border: 2px solid #87cefa
+#trending{
+    border: 2px solid #edae49
 }
 
-.title{
+.trending-title{
     color: #272589;
-    font-size: 20pt;
+    font-size: 14pt;
 }
 
 .author{

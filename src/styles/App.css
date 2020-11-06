@@ -1,5 +1,5 @@
 .App {
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   text-align: center;
 }
 
@@ -43,7 +43,7 @@ input{
 .content{
   display: flex;
   flex-direction: row;
-  width: 90%;
+  width: 95%;
   justify-content: center;
   margin-top: 16px
 }

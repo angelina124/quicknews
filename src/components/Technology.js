@@ -1,21 +1,34 @@
 import React from 'react';
 import Article from './Article'
+import TrendingArticle from './TrendingArticle'
 import news from '../utilities/news'
 
 const dataToComponents = ({type, data}) => (
     <ul style={{padding: 0, listStyleType: 'none'}}>
         {data.map((article, i) => 
             <li key={i}>
-                <Article
-                    title={article.title}
-                    author={article.author}
-                    description={article.description}
-                    url={article.url}
-                    imageSrc={article.urlToImage}
-                    publishedAt={article.publishedAt}
-                    source={article.source}
-                    type={type}
-                />
+                {type === 'filtered' ?
+                    <Article
+                        title={article.title}
+                        author={article.author}
+                        description={article.description}
+                        url={article.url}
+                        imageSrc={article.urlToImage}
+                        publishedAt={article.publishedAt}
+                        source={article.source}
+                        type={type}
+                    /> :
+                    <TrendingArticle
+                        title={article.title}
+                        author={article.author}
+                        description={article.description}
+                        url={article.url}
+                        imageSrc={article.urlToImage}
+                        publishedAt={article.publishedAt}
+                        source={article.source}
+                        type={type}
+                    />
+                }
             </li>
         )}
     </ul>
@@ -92,9 +105,9 @@ export default class Technology extends React.Component{
         const { keyword} = this.props
     
         return (
-        <div style={{display:"flex", flexDirection:"row", justifyContent:"left"}}>
-          <div style={{width:'60%', height: '100%'}}>
-            <div style={{display: 'flex', flexDirection: 'column'}}>
+        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-around"}}>
+          <div style={{width:'65%', height: '100%'}}>
+            <div style={{display: 'flex', flexDirection: 'column', backgroundColor:'#e1e1e1', padding:5}}>
               <p style={{fontSize:24, marginBottom: 0}}>FILTERED NEWS</p>
               {keyword.length !== 0 ? <p>{`Keyword: ${keyword}`}</p> : <div/>}
             </div>
@@ -109,8 +122,10 @@ export default class Technology extends React.Component{
                 }
             </div>
           </div>
-          <div style={{width:'40%', height: '100%'}}>
-            <p style={{fontSize:24, marginBottom: 0}}>TRENDING NEWS</p>
+          <div style={{width:'30%', height: '100%'}}>
+                <div style={{backgroundColor:'#e1e1e1', padding:5}}>
+                 <p style={{fontSize:24, marginBottom: 0}}>TRENDING NEWS</p>
+                </div>
             <div style={{overflow: 'scroll', height: '80vh'}}>
             { isFetching || !popularNews ? 
                     (<p>Fetching data...</p>) : 
