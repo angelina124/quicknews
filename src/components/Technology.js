@@ -1,5 +1,6 @@
 import React from 'react';
 import Article from './Article'
+import news from '../utilities/news'
 
 const dataToComponents = ({type, data}) => (
     <ul style={{padding: 0, listStyleType: 'none'}}>
@@ -23,14 +24,50 @@ export default class Technology extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            isFetching: false
+            isFetching: false,
+            error: {
+                filtered: false,
+                popular: false
+            }
         }
         this.fetchData = this.fetchData.bind(this)
+        this.fetchNews = this.fetchNews.bind(this)
     }
 
+    async fetchNews({category}){
+        const {sources, startDate, stopDate, keyword} = this.props
+        const categorySources = sources?.[category] || ''
+    
+        let queryword = keyword.length === 0 ? category : keyword
+        
+        const popularNews = await news.fetchpopularNews({category, sources: categorySources, startDate, stopDate})
+          .then((pNews) => {
+            this.setState({error: {...this.state.error, popular: false}})
+            return pNews
+          }).catch((err) => {
+            this.setState({error: {...this.state.error, popular: true}})
+            return []
+          })
+    
+        const filteredNews = await news.fetchFilteredNews({
+            sources: categorySources, 
+            startDate, 
+            stopDate,
+            keyword: queryword
+          })
+          .then((pNews) => {
+            this.setState({error: {...this.state.error, filtered:false}})
+            return pNews
+          }).catch((err) => {
+            this.setState({error: {...this.state.error, filtered:true}})
+            return []
+          })
+        return {popularNews, filteredNews}
+      }
+
     async fetchData(){
-        const { fetchNews, category } = this.props
-        const techNews = await fetchNews({category})
+        const { category } = this.props
+        const techNews = await this.fetchNews({category})
         this.setState({techNews, isFetching:false})
     }
 
@@ -42,14 +79,15 @@ export default class Technology extends React.Component{
     componentDidUpdate(prevProps){
        if(prevProps.keyword !== this.props.keyword 
             || prevProps.category !== this.props.category 
-            || prevProps.startDate !== this.props.startDate){
+            || prevProps.startDate !== this.props.startDate
+            || prevProps.stopDate !== this.props.stopDate){
             this.setState({isFetching: true})
             this.fetchData()
         }
     }
 
     render(){
-        const { isFetching, techNews: {popularNews = [], filteredNews = []} = {} } = this.state
+        const { isFetching, error, techNews: {popularNews = [], filteredNews = []} = {} } = this.state
         const { keyword} = this.props
     
         return (
@@ -62,16 +100,24 @@ export default class Technology extends React.Component{
             <div style={{overflow: 'scroll', height: '80vh'}}>
                 { isFetching || !filteredNews ? 
                     (<p>Fetching data...</p>) : 
-                    dataToComponents({data:filteredNews, type: 'filtered'})
+                    (
+                        error.filtered ? 
+                        <p>This is embarassing! Looks like there was an error fetching your news :(</p> :
+                        dataToComponents({data:filteredNews, type: 'filtered'})
+                    )
                 }
             </div>
           </div>
           <div style={{width:'40%', height: '100%'}}>
             <p style={{fontSize:24}}>TRENDING NEWS</p>
             <div style={{overflow: 'scroll', height: '80vh'}}>
-                { isFetching || !popularNews ? 
+            { isFetching || !popularNews ? 
                     (<p>Fetching data...</p>) : 
-                    dataToComponents({data:popularNews, type: 'trending'})
+                    (
+                        error.popular ? 
+                        <p>This is embarassing! Looks like there was an error fetching your news :(</p> :
+                        dataToComponents({data:popularNews, type: 'popular'})
+                    )
                 }
             </div>
           </div>

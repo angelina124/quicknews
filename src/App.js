@@ -19,34 +19,12 @@ class App extends Component{
       sources: {}
     }
     this.fetchNewsSources = this.fetchNewsSources.bind(this)
-    this.fetchNews = this.fetchNews.bind(this)
     this.onCategoryChange = this.onCategoryChange.bind(this)
   }
 
   fetchNewsSources = async () => {
     const sources = await news.fetchSources()
     this.setState({sources})
-  }
-
-  async fetchNews({category}){
-    const {sources, startDate, stopDate, keyword} = this.state
-    const categorysources = sources?.[category] || ''
-
-    let queryword = keyword.length === 0 ? category : keyword
-    const popularNews = await news.fetchpopularNews({
-      category,
-      sources: categorysources, 
-      startDate, 
-      stopDate
-    })
-
-    const filteredNews = await news.fetchFilteredNews({
-      sources: categorysources, 
-      startDate, 
-      stopDate,
-      keyword: queryword
-    })
-    return {popularNews, filteredNews}
   }
 
   onCategoryChange = ({category}) => {
@@ -59,7 +37,7 @@ class App extends Component{
 
   render = () =>
     {
-      const { category, startDate, stopDate } = this.state
+      const { sources, category, startDate, stopDate } = this.state
       return (
         <div className="App">
           <header className="App-header">
@@ -83,7 +61,7 @@ class App extends Component{
             <div style={{width:'90%'}}>
               <Technology 
                 category={category} 
-                fetchNews={this.fetchNews} 
+                sources={sources}
                 keyword={this.state.keyword} 
                 startDate={startDate} 
                 stopDate={stopDate}

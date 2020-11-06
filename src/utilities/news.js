@@ -24,7 +24,7 @@ const fetchCategorysources = async({category}) => {
     .catch((error) => [])
 }
 
-const fetchpopularNews = ({category, sources, startDate, stopDate, keyword}) => {
+const fetchpopularNews = async ({category, sources, startDate, stopDate, keyword}) => {
     let popularNews = []
     let sourcestring = sources?.length > 0 ? `&sources=${sources}` : ''
     return axios.get(`https://newsapi.org/v2/everything?language=en&q=${category}&sortBy=popularity${sourcestring}&apiKey=${apiKey}`)
@@ -36,7 +36,7 @@ const fetchpopularNews = ({category, sources, startDate, stopDate, keyword}) => 
     
 }
 
-const fetchFilteredNews = ({sources, startDate, stopDate, keyword}) => {
+const fetchFilteredNews = async ({sources, startDate, stopDate, keyword}) => {
     let sourcestring = sources?.length > 0 ? `&sources=${sources}` : ''
     return axios.get(`https://newsapi.org/v2/everything?q=${keyword}&language=en&from=${startDate}&to=${stopDate}&sortBy=relevancy${sourcestring}&apiKey=${apiKey}`)
         .then(response => {
