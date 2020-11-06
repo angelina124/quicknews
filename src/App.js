@@ -87,7 +87,7 @@ class App extends Component{
                           <p 
                             className={sources[category].idMap?.[source] === true ? 'selected-source' : 'source'}
                           >
-                            {source}
+                            {sources[category].nameMap[source]}
                           </p>
                         </div>
                         )
