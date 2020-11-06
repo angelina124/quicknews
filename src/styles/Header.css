@@ -7,7 +7,7 @@
 }
 
 .selected{
-    background-color:cyan;
+    background-color: lightskyblue;
     color: black;
     margin-right: 20px;
     padding-left: 10px;
@@ -15,7 +15,7 @@
 }
 
 .unselected{
-    color:cyan;
+    color: lightskyblue;
     margin-right: 20px;
     padding-left: 10px;
     padding-right: 10px;

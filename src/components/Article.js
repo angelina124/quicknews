@@ -1,7 +1,7 @@
 import '../styles/Article.css';
 
-const Article = ({title, author, description, url, imageSrc, publishedAt}) => (
-    <div onClick={() => window.location.href = `${url}`} className='container'>
+const Article = ({type, title, author, description, url, imageSrc, publishedAt}) => (
+    <div onClick={() => window.location.href = `${url}`} className='container' id={type === 'filtered' ? 'filtered' : 'trending'}>
         { 
         imageSrc && 
         <div className='cover-image-container'>

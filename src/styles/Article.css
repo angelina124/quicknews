@@ -7,10 +7,19 @@ p{
 .container{
     width: 90%;
     padding: 4%;
-    border: 2px solid #272589;
     margin-bottom: 12px;
     position: relative;
 }
+
+#trending{
+    border: 2px solid #edae49
+}
+
+#filtered{
+    border: 2px solid lightskyblue
+}
+
+
 
 .title{
     color: #272589;

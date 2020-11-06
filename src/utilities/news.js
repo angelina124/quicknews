@@ -4,7 +4,7 @@ require('dotenv').config()
 const apiKey = process.env.REACT_APP_SECRET_KEY
 const categories = ['technology', 'sports', 'entertainment']
 
-const fetchsources = async() => {
+const fetchSources = async() => {
     let sources = {}
     for (var category of categories){
         const categorysources = await fetchCategorysources({category})
@@ -45,5 +45,5 @@ const fetchFilteredNews = ({sources, startDate, stopDate, keyword}) => {
         });
 }
 
-const news = { fetchpopularNews, fetchFilteredNews, fetchsources }
+const news = { fetchpopularNews, fetchFilteredNews, fetchSources }
 export default news

@@ -18,25 +18,21 @@ class App extends Component{
       keyword: '',
       sources: {}
     }
-    this.fetchNewssources = this.fetchNewssources.bind(this)
+    this.fetchNewsSources = this.fetchNewsSources.bind(this)
     this.fetchNews = this.fetchNews.bind(this)
     this.onCategoryChange = this.onCategoryChange.bind(this)
   }
 
-  fetchNewssources = async () => {
-    const sources = await news.fetchsources()
+  fetchNewsSources = async () => {
+    const sources = await news.fetchSources()
     this.setState({sources})
   }
 
   async fetchNews({category}){
     const {sources, startDate, stopDate, keyword} = this.state
     const categorysources = sources?.[category] || ''
-    console.log(startDate)
-    console.log(category)
-    console.log(categorysources)
 
     let queryword = keyword.length === 0 ? category : keyword
-    console.log(queryword)
     const popularNews = await news.fetchpopularNews({
       category,
       sources: categorysources, 
@@ -58,7 +54,7 @@ class App extends Component{
   }
 
   componentDidMount(){
-    this.fetchNewssources()
+    this.fetchNewsSources()
   }
 
   render = () =>
@@ -69,7 +65,7 @@ class App extends Component{
           <header className="App-header">
             <Header onCategoryChange={this.onCategoryChange} category={category}/>
           </header>
-          <div style = {{display: 'flex', flexDirection: 'row', width: '95%', justifyContent: 'center'}}>
+          <div style = {{display: 'flex', flexDirection: 'row', width: '95%', justifyContent: 'center', marginTop: 16}}>
             <div className='options'>
               <div className='option'>
                 <label className='option-label' htmlFor='keyword'>Enter keyword:</label>

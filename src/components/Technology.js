@@ -1,7 +1,7 @@
 import React from 'react';
 import Article from './Article'
 
-const dataToComponents = ({data}) => (
+const dataToComponents = ({type, data}) => (
     <ul style={{padding: 0, listStyleType: 'none'}}>
         {data.map((article, i) => 
             <li key={i}>
@@ -12,6 +12,7 @@ const dataToComponents = ({data}) => (
                     url={article.url}
                     imageSrc={article.urlToImage}
                     publishedAt={article.publishedAt}
+                    type={type}
                 />
             </li>
         )}
@@ -29,9 +30,7 @@ export default class Technology extends React.Component{
 
     async fetchData(){
         const { fetchNews, category } = this.props
-        console.log(category)
         const techNews = await fetchNews({category})
-        console.log(techNews)
         this.setState({techNews, isFetching:false})
     }
 
@@ -52,28 +51,27 @@ export default class Technology extends React.Component{
     render(){
         const { isFetching, techNews: {popularNews = [], filteredNews = []} = {} } = this.state
         const { keyword} = this.props
-        console.log(popularNews)
     
         return (
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly"}}>
           <div style={{width:'40%', height: '100%'}}>
             <div style={{display: 'flex', flexDirection: 'row'}}>
-              <p>FILTERED NEWS</p>
+              <p style={{fontSize:24}}>FILTERED NEWS</p>
               {keyword.length === 0 ? <p>{keyword}</p> : <div/>}
             </div>
             <div style={{overflow: 'scroll', height: '80vh'}}>
                 { isFetching || !filteredNews ? 
                     (<p>Fetching data...</p>) : 
-                    dataToComponents({data:filteredNews})
+                    dataToComponents({data:filteredNews, type: 'filtered'})
                 }
             </div>
           </div>
           <div style={{width:'40%', height: '100%'}}>
-            <p>TRENDING NEWS</p>
+            <p style={{fontSize:24}}>TRENDING NEWS</p>
             <div style={{overflow: 'scroll', height: '80vh'}}>
                 { isFetching || !popularNews ? 
                     (<p>Fetching data...</p>) : 
-                    dataToComponents({data:popularNews})
+                    dataToComponents({data:popularNews, type: 'trending'})
                 }
             </div>
           </div>
