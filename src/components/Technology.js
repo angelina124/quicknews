@@ -40,7 +40,7 @@ export default class Technology extends React.Component{
     
         let queryword = keyword.length === 0 ? category : keyword
         
-        const popularNews = await news.fetchpopularNews({category, sources: categorySources, startDate, stopDate})
+        const popularNews = await news.fetchPopularNews({category, sources: categorySources, startDate, stopDate})
           .then((pNews) => {
             this.setState({error: {...this.state.error, popular: false}})
             return pNews
@@ -92,7 +92,7 @@ export default class Technology extends React.Component{
     
         return (
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly"}}>
-          <div style={{width:'40%', height: '100%'}}>
+          <div style={{width:'50%', height: '100%'}}>
             <div style={{display: 'flex', flexDirection: 'row'}}>
               <p style={{fontSize:24}}>FILTERED NEWS</p>
               {keyword.length === 0 ? <p>{keyword}</p> : <div/>}

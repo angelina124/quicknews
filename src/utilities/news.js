@@ -24,10 +24,10 @@ const fetchCategorysources = async({category}) => {
     .catch((error) => [])
 }
 
-const fetchpopularNews = async ({category, sources, startDate, stopDate, keyword}) => {
+const fetchPopularNews = async ({category, sources, startDate, stopDate, keyword}) => {
     let popularNews = []
     let sourcestring = sources?.length > 0 ? `&sources=${sources}` : ''
-    return axios.get(`https://newsapi.org/v2/everything?language=en&q=${category}&sortBy=popularity${sourcestring}&apiKey=${apiKey}`)
+    return axios.get(`https://newsapi.org/v2/top-headlines?country=us&language=en&category=${category}&apiKey=${apiKey}`)
             .then(response => {
                 popularNews = response?.data?.articles
                 return typeof(popularNews) !== 'undefined' ? popularNews : []
@@ -45,5 +45,5 @@ const fetchFilteredNews = async ({sources, startDate, stopDate, keyword}) => {
         });
 }
 
-const news = { fetchpopularNews, fetchFilteredNews, fetchSources }
+const news = { fetchPopularNews, fetchFilteredNews, fetchSources }
 export default news
