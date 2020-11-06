@@ -1,6 +1,6 @@
 import '../styles/Article.css';
 
-const Article = ({source, title, author, description, url, imageSrc, publishedAt}) => (
+const Article = ({source, title, author, description, url, imageSrc, publishedAt, hasPaywall}) => (
     <div onClick={() => window.location.href = `${url}`} className='container' id='filtered'>
         { 
         imageSrc && 
@@ -12,6 +12,7 @@ const Article = ({source, title, author, description, url, imageSrc, publishedAt
         <p className='author'>{!author || author.includes('<') ? '' : author}</p>
         <p className='author'>{source.name} | <span className='date'>{new Date(publishedAt).toDateString()}</span></p>
         <p>{description} <a href={url}> -- read more -- </a></p> 
+        { hasPaywall && <p className='paywall'>*may have paywall</p>}
     </div>
 )
 

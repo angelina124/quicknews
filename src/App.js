@@ -3,7 +3,6 @@ import { Component } from 'react';
 import Header from './components/Header'
 import Technology from './components/Technology'
 import news from './utilities/news'
-import paywallSourceNames from './utilities/paywalls'
 
 class App extends Component{
   constructor(props){

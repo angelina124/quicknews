@@ -2,6 +2,7 @@ import React from 'react';
 import Article from './Article'
 import TrendingArticle from './TrendingArticle'
 import news from '../utilities/news'
+import paywalls from '../constants/paywalls'
 
 const dataToComponents = ({type, data}) => (
     <ul style={{padding: 0, listStyleType: 'none'}}>
@@ -16,6 +17,7 @@ const dataToComponents = ({type, data}) => (
                         imageSrc={article.urlToImage}
                         publishedAt={article.publishedAt}
                         source={article.source}
+                        hasPaywall={paywalls.sourceNames.includes(article.source.name)}
                         type={type}
                     /> :
                     <TrendingArticle
@@ -26,6 +28,7 @@ const dataToComponents = ({type, data}) => (
                         imageSrc={article.urlToImage}
                         publishedAt={article.publishedAt}
                         source={article.source}
+                        hasPaywall={paywalls.sourceNames.includes(article.source.name)}
                         type={type}
                     />
                 }
@@ -51,7 +54,7 @@ export default class Technology extends React.Component{
         const {sources, startDate, stopDate, keyword, category} = this.props
         const categorySources = sources?.[category] || {}
     
-        let queryword = keyword.length === 0 ? category : keyword
+        let queryword = keyword.length === 0 ? category : `${category} ${keyword}`
         
         const popularNews = await news.fetchPopularNews({category})
           .then((pNews) => {
@@ -61,9 +64,7 @@ export default class Technology extends React.Component{
             this.setState({error: {...this.state.error, popular: true}})
             return []
           })
-        console.log(categorySources)
         const keys = categorySources?.idMap ? Object.keys(categorySources.idMap).filter((id) => categorySources.idMap[id] === true) : {}
-        console.log(keys)
     
         const filteredNews = await news.fetchFilteredNews({
             sources: keys, 
@@ -101,7 +102,6 @@ export default class Technology extends React.Component{
     render(){
         const { isFetching, error, techNews: {popularNews = [], filteredNews = []} = {} } = this.state
         const { keyword} = this.props
-        console.log(this.props.sources)
     
         return (
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-around"}}>
