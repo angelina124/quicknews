@@ -44,17 +44,16 @@ export default class Technology extends React.Component{
                 popular: false
             }
         }
-        this.fetchData = this.fetchData.bind(this)
         this.fetchNews = this.fetchNews.bind(this)
     }
 
-    async fetchNews({category}){
-        const {sources, startDate, stopDate, keyword} = this.props
-        const categorySources = sources?.[category] || ''
+    async fetchNews(){
+        const {sources, startDate, stopDate, keyword, category} = this.props
+        const categorySources = sources?.[category] || {}
     
         let queryword = keyword.length === 0 ? category : keyword
         
-        const popularNews = await news.fetchPopularNews({category, sources: categorySources, startDate, stopDate})
+        const popularNews = await news.fetchPopularNews({category})
           .then((pNews) => {
             this.setState({error: {...this.state.error, popular: false}})
             return pNews
@@ -62,9 +61,12 @@ export default class Technology extends React.Component{
             this.setState({error: {...this.state.error, popular: true}})
             return []
           })
+        console.log(categorySources)
+        const keys = categorySources?.idMap ? Object.keys(categorySources.idMap).filter((id) => categorySources.idMap[id] === true) : {}
+        console.log(keys)
     
         const filteredNews = await news.fetchFilteredNews({
-            sources: categorySources, 
+            sources: keys, 
             startDate, 
             stopDate,
             keyword: queryword
@@ -76,33 +78,30 @@ export default class Technology extends React.Component{
             this.setState({error: {...this.state.error, filtered:true}})
             return []
           })
-        return {popularNews, filteredNews}
+        this.setState({techNews: {popularNews, filteredNews}, isFetching: false})
       }
 
-    async fetchData(){
-        const { category } = this.props
-        const techNews = await this.fetchNews({category})
-        this.setState({techNews, isFetching:false})
-    }
 
     componentDidMount(){
         this.setState({isFetching: true})
-        this.fetchData()
+        this.fetchNews()
     }
 
     componentDidUpdate(prevProps){
        if(prevProps.keyword !== this.props.keyword 
             || prevProps.category !== this.props.category 
             || prevProps.startDate !== this.props.startDate
-            || prevProps.stopDate !== this.props.stopDate){
+            || prevProps.stopDate !== this.props.stopDate
+            || prevProps.sources !== this.props.sources){
             this.setState({isFetching: true})
-            this.fetchData()
+            this.fetchNews()
         }
     }
 
     render(){
         const { isFetching, error, techNews: {popularNews = [], filteredNews = []} = {} } = this.state
         const { keyword} = this.props
+        console.log(this.props.sources)
     
         return (
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-around"}}>

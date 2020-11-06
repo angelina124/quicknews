@@ -18,13 +18,21 @@ input{
   padding: 6px
 }
 
-.options{
+.left-bar{
   width: 20%;
   padding: 0px 20px 0px 20px;
   display: flex;
   flex-direction: column;
+}
+
+.options{
+  border: 2px dotted grey;
+  display: flex;
+  flex-direction: column;
   justify-content: left;
   align-items: left;
+  padding: 12px;
+  margin-bottom: 16px;
 }
 
 .option{
@@ -38,6 +46,30 @@ input{
   text-align: left;
   left: 0;
   margin-bottom: 10px
+}
+
+.sources{
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.source{
+  margin: 5px;
+  padding: 8px;
+  background-color: #e1e1e1;
+  border-radius: 5px;
+  font-size: 10pt;
+}
+
+.selected-source{
+  margin: 5px;
+  padding: 8px;
+  background-color:#f7cf73;
+  border-radius: 5px;
+  font-size: 10pt;
 }
 
 .content{
