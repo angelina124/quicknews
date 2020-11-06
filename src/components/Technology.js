@@ -13,6 +13,7 @@ const dataToComponents = ({type, data}) => (
                     url={article.url}
                     imageSrc={article.urlToImage}
                     publishedAt={article.publishedAt}
+                    source={article.source}
                     type={type}
                 />
             </li>
