@@ -11,7 +11,7 @@ const Article = ({source, title, author, description, url, imageSrc, publishedAt
         <p className='title'>{title}</p>
         <p className='author'>{author}</p>
         <p className='author'>{source.name} | <span className='date'>{new Date(publishedAt).toDateString()}</span></p>
-        <p>{description} <a href={url}> -- read more -- </a></p> :
+        <p>{description} <a href={url}> -- read more -- </a></p> 
     </div>
 )
 
