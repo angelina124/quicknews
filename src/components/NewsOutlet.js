@@ -1,6 +1,6 @@
 import '../styles/NewsOutlet.css';
 
-const Article = ({name, isSelected}) => (
+const Article = ({source, title, author, description, url, imageSrc, publishedAt}) => (
     <div onClick={() => window.location.href = `${url}`} className='container' id='filtered'>
         { 
         imageSrc && 

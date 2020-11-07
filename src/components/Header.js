@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilm, faFootballBall, faCode } from '@fortawesome/free-solid-svg-icons'
 
 function Header({onCategoryChange, category}) {
-    console.log(category)
     return (
         <div className='header'>
             <div className={category === 'entertainment' ? 'selected' : 'unselected'} onClick={() => onCategoryChange({category: 'entertainment'})}>

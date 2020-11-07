@@ -1,7 +1,7 @@
 import './styles/App.css';
 import { Component } from 'react';
 import Header from './components/Header'
-import Technology from './components/Technology'
+import News from './components/News'
 import news from './utilities/news'
 
 class App extends Component{
@@ -17,7 +17,8 @@ class App extends Component{
       category: 'entertainment',
       keyword: '',
       sources: {},
-      identifyPaywalls: []
+      identifyPaywalls: [],
+      filteredPage: 1
     }
     this.fetchNewsSources = this.fetchNewsSources.bind(this)
     this.onCategoryChange = this.onCategoryChange.bind(this)
@@ -28,7 +29,6 @@ class App extends Component{
     const sources = await news.fetchSources()
     this.setState({sources})
   }
-
 
   onCategoryChange = ({category}) => {
     this.setState({category})
@@ -57,7 +57,7 @@ class App extends Component{
 
   render = () =>
     {
-      const { sources, category, startDate, stopDate, keyword } = this.state
+      const { sources, category, startDate, stopDate, keyword, filteredPage } = this.state
       return (
         <div className="App">
           <div>
@@ -78,6 +78,10 @@ class App extends Component{
                     <label className='option-label' htmlFor='stopDate'>Enter end date <br/>(yyyy-mm-dd)</label>
                     <input id='stopDate' type="text" onChange={(event) => { this.setState({stopDate: event.target.value})}} placeholder="e.g. 2020-11-06"/>
                 </div>
+                <div className='option'>
+                    <label className='option-label' htmlFor='page-number'>Enter page number:</label>
+                    <input id='page-number' type="text" onChange={(event) => { this.setState({filteredPage: event.target.value})}} placeholder="2"/>
+                </div>
                 </div>
                 <div className='sources'>
                   {sources && sources[category] && 
@@ -96,12 +100,13 @@ class App extends Component{
                 </div>
               </div>
               <div className='news'>
-                <Technology 
+                <News 
                   category={category} 
                   sources={sources}
                   keyword={keyword} 
                   startDate={startDate} 
                   stopDate={stopDate}
+                  filteredPage={filteredPage}
                 />
               </div>
             </div>

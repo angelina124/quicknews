@@ -6,8 +6,8 @@ import paywalls from '../constants/paywalls'
 
 const dataToComponents = ({type, data}) => (
     <ul style={{padding: 0, listStyleType: 'none'}}>
-        {data.map((article, i) => 
-            <li key={i}>
+        {data.map((article, i) => {
+            return <li key={i}>
                 {type === 'filtered' ?
                     <Article
                         title={article.title}
@@ -17,7 +17,7 @@ const dataToComponents = ({type, data}) => (
                         imageSrc={article.urlToImage}
                         publishedAt={article.publishedAt}
                         source={article.source}
-                        hasPaywall={paywalls.sourceNames.includes(article.source.name)}
+                        hasPaywall={article?.source?.name && paywalls.sourceNames.includes(article.source.name)}
                         type={type}
                     /> :
                     <TrendingArticle
@@ -28,16 +28,16 @@ const dataToComponents = ({type, data}) => (
                         imageSrc={article.urlToImage}
                         publishedAt={article.publishedAt}
                         source={article.source}
-                        hasPaywall={paywalls.sourceNames.includes(article.source.name)}
+                        hasPaywall={article?.source?.name && paywalls.sourceNames.includes(article.source.name)}
                         type={type}
                     />
                 }
             </li>
-        )}
+        })}
     </ul>
 )
 
-export default class Technology extends React.Component{
+export default class News extends React.Component{
     constructor(props){
         super(props)
         this.state = {
@@ -45,13 +45,17 @@ export default class Technology extends React.Component{
             error: {
                 filtered: false,
                 popular: false
+            },
+            articles: {
+              popularNews: [],
+              filteredNews: []
             }
         }
         this.fetchNews = this.fetchNews.bind(this)
     }
 
-    async fetchNews(){
-        const {sources, startDate, stopDate, keyword, category} = this.props
+    fetchNews = async () => {
+        const {sources, startDate, stopDate, keyword, category, filteredPage} = this.props
         const categorySources = sources?.[category] || {}
     
         let queryword = keyword.length === 0 ? category : `${category} ${keyword}`
@@ -70,16 +74,23 @@ export default class Technology extends React.Component{
             sources: keys, 
             startDate, 
             stopDate,
-            keyword: queryword
+            keyword: queryword,
+            filteredPage
           })
           .then((pNews) => {
             this.setState({error: {...this.state.error, filtered:false}})
             return pNews
           }).catch((err) => {
-            this.setState({error: {...this.state.error, filtered:true}})
+            this.setState({error: {...this.state.error, filtered:true}, filteredPage: 0})
             return []
           })
-        this.setState({techNews: {popularNews, filteredNews}, isFetching: false})
+        this.setState({
+          articles: {
+            popularNews: popularNews,
+            filteredNews: filteredNews
+          },
+          isFetching: false
+        })
       }
 
 
@@ -93,31 +104,39 @@ export default class Technology extends React.Component{
             || prevProps.category !== this.props.category 
             || prevProps.startDate !== this.props.startDate
             || prevProps.stopDate !== this.props.stopDate
-            || prevProps.sources !== this.props.sources){
+            || prevProps.sources !== this.props.sources
+            || prevProps.filteredPage !== this.props.filteredPage){
             this.setState({isFetching: true})
             this.fetchNews()
         }
     }
 
     render(){
-        const { isFetching, error, techNews: {popularNews = [], filteredNews = []} = {} } = this.state
-        const { keyword} = this.props
-    
+        const { isFetching, error, articles: {popularNews = [], filteredNews = []} = {} } = this.state
+        const { keyword, filteredPage } = this.props
+
         return (
         <div style={{display:"flex", flexDirection:"row", justifyContent:"space-around"}}>
           <div style={{width:'65%', height: '100%'}}>
             <div style={{display: 'flex', flexDirection: 'column', textDecoration: 'underline', textDecorationColor:'lightgray'}}>
               <p style={{fontSize:24, marginBottom: 0}}>FILTERED NEWS</p>
               {keyword.length !== 0 ? <p>{`Keyword: ${keyword}`}</p> : <div/>}
+              <p>{`page: ${filteredPage}`}</p>
             </div>
             <div style={{overflow: 'scroll', height: '80vh'}}>
-                { isFetching || !filteredNews ? 
+                { 
+                  filteredNews.length === 0 ?
+                  <p>Unable to fetch articles. Please double-check your search parameters.</p> :
+                  (isFetching  ? 
                     (<p>Fetching data...</p>) : 
                     (
                         error.filtered ? 
                         <p>This is embarassing! Looks like there was an error fetching your news :(</p> :
-                        dataToComponents({data:filteredNews, type: 'filtered'})
+                        <div>
+                          {dataToComponents({data:filteredNews, type: 'filtered'})}
+                        </div>
                     )
+                  )
                 }
             </div>
           </div>
@@ -126,7 +145,7 @@ export default class Technology extends React.Component{
                 <p style={{fontSize:24, marginBottom: 0}}>TRENDING NEWS</p>
             </div>
             <div style={{overflow: 'scroll', height: '80vh'}}>
-            { isFetching || !popularNews ? 
+            { isFetching || popularNews.length === 0 ? 
                     (<p>Fetching data...</p>) : 
                     (
                         error.popular ? 

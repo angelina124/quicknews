@@ -47,12 +47,11 @@ const fetchPopularNews = async ({category}) => {
     
 }
 
-const fetchFilteredNews = async ({sources, startDate, stopDate, keyword}) => {
-    let sourcestring = sources?.length > 0 ? `&sources=${sources.join(", ")}` : ''
-    return axios.get(`https://newsapi.org/v2/everything?q=${keyword}&language=en&from=${startDate}&to=${stopDate}&sortBy=relevancy${sourcestring}&apiKey=${apiKey}`)
+const fetchFilteredNews = async ({sources, startDate, stopDate, keyword, filteredPage}) => {
+    let sourceString = sources?.length > 0 ? `&sources=${sources.join(", ")}` : ''
+    return axios.get(`https://newsapi.org/v2/everything?q=${keyword}&language=en&page=${filteredPage}&from=${startDate}&to=${stopDate}&sortBy=relevancy${sourceString}&apiKey=${apiKey}`)
         .then(response => {
             let filteredArticles = response?.data?.articles
-
             return typeof(filteredArticles) !== 'undefined' ? filteredArticles : []
         })
 }
