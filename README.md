@@ -16,7 +16,7 @@ app.
 ![](quicknews.gif)
 
 Users can filter news based on start and end dates and can specify keywords. If
-start or end dates are invalid, no new data will be fetched. Users may also specifiy 
+start or end dates are invalid, no new data will be fetched. Users may also specify 
 the results page number in order to see new results. Users may also select news 
 sources to filter by. The news source suggestions provided on the left are selected 
 by default but users may select or deselect sources. When no sources are selected, 
@@ -50,7 +50,7 @@ and laggy.
 Another solution would be to create a backend and periodically run a 'scout' script
 in order to classify paywalls. This may be unhelpful for users in scenarios where
 they get a certain amount of visits to articles of a site before the paywall goes
-up. They would then be dissuaded from reading articles they coould actually read
+up. They would then be dissuaded from reading articles they could actually read
 for free.
 
 
