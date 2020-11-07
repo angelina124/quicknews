@@ -80,7 +80,7 @@ class App extends Component{
                 </div>
                 <div className='option'>
                     <label className='option-label' htmlFor='page-number'>Enter page number:</label>
-                    <input id='page-number' type="text" onChange={(event) => { this.setState({filteredPage: event.target.value})}} placeholder="2"/>
+                    <input id='page-number' type="text" onChange={(event) => { this.setState({filteredPage: event.target.value})}} placeholder="1"/>
                 </div>
                 </div>
                 <div className='sources'>
