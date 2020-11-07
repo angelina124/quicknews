@@ -1,8 +1,10 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Article from './Article'
 import TrendingArticle from './TrendingArticle'
 import news from '../utilities/news'
 import paywalls from '../constants/paywalls'
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 
 const dataToComponents = ({type, data}) => (
     <ul style={{padding: 0, listStyleType: 'none'}}>
@@ -126,12 +128,20 @@ export default class News extends React.Component{
             <div style={{overflow: 'scroll', height: '80vh'}}>
                 { 
                   filteredNews.length === 0 ?
-                  <p>Unable to fetch articles. Please double-check your search parameters.</p> :
+                  <div>
+                    <p>
+                      Unable to fetch articles. Please double-check your search parameters.
+                      <FontAwesomeIcon icon={faExclamationCircle}/>
+                    </p>
+                  </div> :
                   (isFetching  ? 
                     (<p>Fetching data...</p>) : 
                     (
                         error.filtered ? 
-                        <p>This is embarassing! Looks like there was an error fetching your news :(</p> :
+                        <p>
+                          This is embarassing! Looks like there was an error fetching your news
+                          <FontAwesomeIcon icon={faExclamationCircle}/>
+                        </p> :
                         <div>
                           {dataToComponents({data:filteredNews, type: 'filtered'})}
                         </div>

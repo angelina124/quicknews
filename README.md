@@ -15,11 +15,12 @@ app.
 ## Functionality
 ![](quicknews.gif)
 
-Users can filter news based on start and end dates and can specify keywords. Users
-may also specifiy the results page number in order to see new results. Users may
-also select news sources to filter by. The news source suggestions provided on the
-left are selected by default but users may select or deselect sources. When no sources
-are selected, 'FILTERED NEWS' displays articles related to the category, regardless
+Users can filter news based on start and end dates and can specify keywords. If
+start or end dates are invalid, no new data will be fetched. Users may also specifiy 
+the results page number in order to see new results. Users may also select news 
+sources to filter by. The news source suggestions provided on the left are selected 
+by default but users may select or deselect sources. When no sources are selected, 
+'FILTERED NEWS' displays articles related to the category, regardless
 of source. The 'FILTERED NEWS' column is scrollable and is populated with news 
 results from a specified page. The 'TRENDING NEWS' column displays the top news 
 headlines for a certain category.

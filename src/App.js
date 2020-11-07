@@ -3,6 +3,8 @@ import { Component } from 'react';
 import Header from './components/Header'
 import News from './components/News'
 import news from './utilities/news'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 
 class App extends Component{
   constructor(props){
@@ -18,7 +20,9 @@ class App extends Component{
       keyword: '',
       sources: {},
       identifyPaywalls: [],
-      filteredPage: 1
+      filteredPage: 1,
+      invalidStartDate: false,
+      invalidStopDate: false
     }
     this.fetchNewsSources = this.fetchNewsSources.bind(this)
     this.onCategoryChange = this.onCategoryChange.bind(this)
@@ -57,7 +61,7 @@ class App extends Component{
 
   render = () =>
     {
-      const { sources, category, startDate, stopDate, keyword, filteredPage } = this.state
+      const { sources, category, startDate, stopDate, keyword, filteredPage, invalidStartDate, invalidStopDate } = this.state
       return (
         <div className="App">
           <div>
@@ -70,13 +74,33 @@ class App extends Component{
                   <label className='option-label' htmlFor='keyword'>Enter keyword:</label>
                   <input id='keyword' type="text" onChange={(event) => { this.setState({keyword: event.target.value})}} placeholder="e.g. google"/>
                 </div>
+                { (invalidStartDate || invalidStopDate) && 
+                  (<div className='option'>
+                      <p>The date range you have specified is invalid <FontAwesomeIcon icon={faExclamationCircle}/></p>
+                  </div>)
+                }
                 <div className='option'>
                   <label className='option-label' htmlFor='startDate'>Enter start date <br/>(yyyy-mm-dd):</label>
-                  <input id='startDate' type="text" onChange={(event) => { this.setState({startDate: event.target.value})}} placeholder="e.g. 2020-09-01"/>
+                  <input id='startDate' type="text" onChange={(event) => { 
+                    let date = new Date(event.target.value)
+                    if(!!(date.getTime())){
+                      this.setState({startDate: event.target.value, invalidStartDate: false})
+                    } else{
+                      this.setState({invalidStartDate: true})
+                    }
+                  }} placeholder="e.g. 2020-09-01"/>
                 </div>
                 <div className='option'>
                     <label className='option-label' htmlFor='stopDate'>Enter end date <br/>(yyyy-mm-dd)</label>
-                    <input id='stopDate' type="text" onChange={(event) => { this.setState({stopDate: event.target.value})}} placeholder="e.g. 2020-11-06"/>
+                    <input id='stopDate' type="text" onChange={(event) => { 
+                      let date = new Date(event.target.value)
+                      let startD = new Date(startDate)
+                      if(!!(date.getTime()) && date.getTime() > startD.getTime()){
+                        this.setState({stopDate: event.target.value, invalidStopDate: false})
+                      } else{
+                        this.setState({invalidStopDate: true})
+                      }
+                    }} placeholder="e.g. 2020-11-06"/>
                 </div>
                 <div className='option'>
                     <label className='option-label' htmlFor='page-number'>Enter page number:</label>
