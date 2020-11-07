@@ -9,7 +9,7 @@ in order to fetch news. You can view the published site [here](https://quicknews
 
 ## Running this Project Locally
 This project was created with create-react-app so setting it up locally is very easy.
-Run `npm install` tto install dependencies then run `npm start` to launch the web
+Run `npm install` to install dependencies then run `npm start` to launch the web
 app.
 
 ## Functionality
