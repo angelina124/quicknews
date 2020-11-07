@@ -58,7 +58,7 @@ export default class News extends React.Component{
         const {sources, startDate, stopDate, keyword, category, filteredPage} = this.props
         const categorySources = sources?.[category] || {}
     
-        let queryword = keyword.length === 0 ? category : `${category} ${keyword}`
+        let queryword = keyword.length === 0 || !keyword ? category : `${category} ${keyword}`
         
         const popularNews = await news.fetchPopularNews({category})
           .then((pNews) => {
